@@ -1,0 +1,15 @@
+settings-->version controller
+
+忽略上传的文件
+ignored Files 中设置需要忽略的上传文件
+
+设置上传路径
+打开版本控制器，选择上传项目share project(subversion)中指定了路径，但是显示无法找到指定的路径
+因为在路径存在svn关键字，svn服务器会将他当作一个命令。所以在subversion去掉。
+
+当路径和文件建立关系，文件变绿色，这时候资源库中没有文件。需要subversion-->commit Directory进行
+提交
+
+
+
+
