@@ -1,0 +1,83 @@
+File-->settings  当前项目的配置
+other settings-->Default settings  全局配置（对IDEA打开的以及后面新建的项目的全局配置）
+
+https://www.e-learn.cn/content/qita/2624871
+Project Structure 项目结构进行配置。
+project:项目相关
+        SDK:JDK就是SDK
+        language level: 限定项目编译检查时最低要求的 JDK 特性。
+            我们应该知道 Java JDK 在每个新版本都会有其新特性，而新版本一般也会向下兼容旧版本的特性，
+            IntelliJ IDEA 是对这些 JDK 的新特性是这样介绍的：
+
+            当我们使用 JDK 8 的时候，我们只能向下兼容 JDK 8 及其以下的特性，所以只能选择 8 及其以下的 language level。
+            所以当我们项目使用的是 JDK 8，但是代码却没有使用 JDK 8 的新特性，最多使用了 JDK 7 的特性的时候我们可以选择
+             7 - Diamonds，ARM，multi-catch etc.
+        Project compiler output：项目编译器输出，指定IntelliJ IDEA将存储编译结果的路径
+
+Modules:模块相关
+        sources:设置modules模块的目录结构分类，让IEDEA知道哪些目录是放源码，哪些目录是放编译后的文件
+                1.sources：源代码存放的文件，蓝色
+                2.Resources:一般对应着Sources文件，一般放配置文件，如：log4j.properties，application.yml。
+                3.Tests：这个对应着Tests文件夹，存放着Tests代码的配置文件。
+                4.Test Resources:设置配出编译检查的文件，例如我们在project模块设置的out文件夹。
+
+        paths：设置modules模块-源码编译后的输出目录
+                1. Inherit project compile output path：继承项目编译输出路径 选择此选项以使用为项目指定的路径。
+                即上面在 【Project】选项中设置的out文件路径。
+                2.Use module compile output path:使用模块编译输出路径。
+
+                             Output path：编译输出路径。
+
+                             Test output path：测试代码编译输出路径。
+
+                             Exclude output paths： 排除输出路径，选中此复选框可以排除输出目录。
+
+        Dependenceies:设置modules模块所依赖的jar包
+                      1.Module SDK：模块SDK，选择模块SDK。
+                        要将项目SDK与模块相关联，请选择Project SDK。请注意，如果稍后更改了项目SDK，模块SDK将相应更改。
+                      2.依赖列表
+Libraries ：可以定义模块SDK并形成模块依赖关系列表。
+            添加本地jar包，网络来源的jar包，排除jar包，删除jar包。
+
+Facets ：
+        Name：输入该Web Facet的名称,也是默认的名称。
+        Deployment Descriptors：在这部分，管理应用的部署描述符。
+            --Type:只读字段，展示部署描述符类型。
+            --Path:只读字段，展示部署描述符的位置。各自部署描述符有：web.xml,ejb.xml, or application.xml
+        Add Application Server specific descriptor ：在这部分，我们将第三方或未分类资源路径映射到部署根目录。
+            --Web Resource Directory ：只读字段，展示所需的Web Resource位置的本地目录。设置web资源文件的根目录
+                                       Web Resource目录包含Web开发所需的文件：JSP、HTML、XML等。
+                                       Web Resource目录下的内容会被拷贝到由Relative Path所指定的Web模块部署目录。
+            --Pah Relative to Deployment Root：只读字段，展示Web Resource相对于Web部署的根目录的相对路径。
+        问题：Tomcat成功启动了自动进入localhost:8080,但是进去后是404页面，找不到自己哪里有问题。查看web项目的部署位置。
+
+Artifacts：
+        artifacts是maven中的一个概念，表示项目/modules如何打包，比如jar,war,war exploded,ear等打包形式，一个项目或者
+        说module有了artifacts就可以部署到web应用服务器上了（注意artifact的前提是已经配置好module,如果连项目都不是，怎
+        么配置artifacts来定义发布项目的形式呢）https://blog.csdn.net/ydk888888/article/details/77247725
+
+
+        war exploded模式是直接把文件夹、jsp页面 、classes等等移到Tomcat 部署文件夹里面，进行加载部署。因此这种方式
+        支持热部署，一般在开发的时候也是用这种方式。
+        在run configurations 中设置tomcat的时候，勾选 show dialog 可以实现热部署。
+             String contextPath = request.getSession().getServletContext().getRealPath("/");
+             可以看出最终得到的是我这个项目的位置，其实就是这个项目target的位置。
+
+
+
+        web application archive，就是war包形式，每次都会重新打包全部的,将项目打成一个war包在指定位置；
+        项目打包后的发布的位置：
+            String contextPath = request.getSession().getServletContext().getRealPath("/");
+            C:\Software\apache-tomcat-8.0.32 是我Tomcat的所在位置。可以看出通过war模式是最终打包部署到Tomcat的位置。
+            https://blog.csdn.net/linjpg/article/details/73322881
+
+
+maven设置：
+        runner-->run in background运行环境：VM option栏设置jvm参数:指定运行内存：-Xmx256m。
+                                           environment variabales ：环境变量
+                                           jre：maven有编译打包功能，所以他也需要指定jre。
+ java compiler: idea在编译项目使用的版本，如果在maven中美誉治党编译版本，idea默认使用1.5的版本。
+
+1.字体大小
+2.主题
+3.maven配置
